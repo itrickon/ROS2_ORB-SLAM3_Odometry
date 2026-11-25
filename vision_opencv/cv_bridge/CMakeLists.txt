@@ -36,7 +36,7 @@ endif()
 find_package(rcpputils REQUIRED)
 find_package(sensor_msgs REQUIRED)
 
-find_package(OpenCV 4.12 QUIET
+find_package(OpenCV 4.6 QUIET
   COMPONENTS
     opencv_core
     opencv_imgproc
@@ -44,7 +44,7 @@ find_package(OpenCV 4.12 QUIET
   CONFIG
 )
 if(NOT OpenCV_FOUND)
-  find_package(OpenCV 3 REQUIRED
+  find_package(OpenCV 4 REQUIRED
     COMPONENTS
       opencv_core
       opencv_imgproc

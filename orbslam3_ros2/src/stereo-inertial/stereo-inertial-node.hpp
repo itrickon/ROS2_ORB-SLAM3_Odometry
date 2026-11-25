@@ -7,6 +7,11 @@
 
 #include <cv_bridge/cv_bridge.h>
 
+#include <atomic>
+#include <cmath>
+#include <vector>
+#include <chrono>
+
 #include <nav_msgs/msg/odometry.hpp>
 #include <geometry_msgs/msg/transform_stamped.hpp>
 #include <tf2_ros/transform_broadcaster.h>
@@ -59,7 +64,17 @@ private:
     bool has_prev_pose_ = false;
 
     // Accumulated odometry pose
-    Sophus::SE3f accumulated_pose_;
+    //Sophus::SE3f accumulated_pose_;
+    Sophus::SE3f accumulated_pose_ = Sophus::SE3f(); // Вставка
+
+    bool prev_tracking_ok_ = false; // Вставка
+    std::atomic<bool> running_{true};
+
+    // диагностика (вместо static-переменных в cpp)
+    std::atomic<unsigned long long> processedCount_{0};
+    std::atomic<unsigned long long> droppedCount_{0};
+    std::atomic<unsigned long long> mismatchCount_{0};
+    std::chrono::steady_clock::time_point lastLogT_ = std::chrono::steady_clock::now(); //
 
     bool doRectify_;
     bool doEqual_;
